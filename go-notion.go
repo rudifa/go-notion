@@ -35,7 +35,11 @@ func main() {
 	// YOUR_DATABASE_ID := "ef7479ceaa094197859acf9d8ced9b44"
 
 	// Make GET request to Notion API
-	url := "https://api.notion.com/v1/databases/ef7479ceaa094197859acf9d8ced9b44/query" // Replace {YOUR_DATABASE_ID} with your actual Notion database ID
+	//url := "https://api.notion.so/v1/databases/ef7479ceaa094197859acf9d8ced9b44/query" // Replace {YOUR_DATABASE_ID} with your actual Notion database ID
+	// url := "https://www.notion.so/ef7479ceaa094197859acf9d8ced9b44" // Error parsing JSON: invalid character '<' looking for beginning of value
+	url := "https://api.notion.com/v1/databases/ef7479ceaa094197859acf9d8ced9b44/query" //
+
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)
@@ -60,20 +64,22 @@ func main() {
 	}
 
 	// Parse JSON response as error
-	var error ErrorResponse
-	err = json.Unmarshal(body, &error)
-	if err != nil {
-		fmt.Println("Error parsing JSON:", err)
-		os.Exit(1)
-	} else {
-		fmt.Println("Error:", error)
-	}
+	// var error ErrorResponse
+	// err = json.Unmarshal(body, &error)
+	// if err != nil {
+	// 	fmt.Println("Error 1 parsing JSON:", err)
+	// 	os.Exit(1)
+	// } else {
+	// 	fmt.Println("Error:", error)
+	// }
+
+	fmt.Println("Response Body:", string(body))
 
 	// Parse JSON response
 	var pages []NotionPage
 	err = json.Unmarshal(body, &pages)
 	if err != nil {
-		fmt.Println("Error parsing JSON:", err)
+		fmt.Println("Error 2 parsing JSON:", err)
 		os.Exit(1)
 	}
 
