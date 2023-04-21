@@ -37,7 +37,7 @@ func main() {
 	// Make GET request to Notion API
 	//url := "https://api.notion.so/v1/databases/ef7479ceaa094197859acf9d8ced9b44/query" // Replace {YOUR_DATABASE_ID} with your actual Notion database ID
 	// url := "https://www.notion.so/ef7479ceaa094197859acf9d8ced9b44" // Error parsing JSON: invalid character '<' looking for beginning of value
-	url := "https://api.notion.com/v1/databases/ef7479ceaa094197859acf9d8ced9b44/query" //
+	url := "https://api.notion.com/v1/databases/ef7479ceaa094197859acf9d8ced9b44" //
 
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -47,6 +47,7 @@ func main() {
 	}
 	req.Header.Set("Authorization", "Bearer "+apiToken)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Notion-Version", "2022-06-28")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
