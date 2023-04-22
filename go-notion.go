@@ -1,44 +1,42 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
-// NotionPage represents a Notion page object
-type NotionPage struct {
-	ID         string `json:"id"`
-	Title      string `json:"title"`
-	Created    string `json:"created_time"`
-	LastEdited string `json:"last_edited_time"`
+func Prettyprint(str string) (string, error) {
+    var prettyJSON bytes.Buffer
+    if err := json.Indent(&prettyJSON, []byte(str), "", "    "); err != nil {
+        return "", err
+    }
+    return prettyJSON.String(), nil
 }
-
-type ErrorResponse struct {
-	Object  string `json:"object"`
-	Status  int    `json:"status"`
-	Code    string `json:"code"`
-	Message string `json:"message"`
-}
-
 
 func main() {
-	// Read Notion API token from environment variable
+	// Load environment variables from .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file:", err)
+	}
+
+	// Access environment variables
+	databaseId := os.Getenv("NOTION_API_DATABASE")
 	apiToken := os.Getenv("NOTION_API_TOKEN")
+
 	if apiToken == "" {
 		fmt.Println("Error: NOTION_API_TOKEN environment variable not set.")
 		os.Exit(1)
 	}
 
-	// YOUR_DATABASE_ID := "ef7479ceaa094197859acf9d8ced9b44"
-
-	// Make GET request to Notion API
-	//url := "https://api.notion.so/v1/databases/ef7479ceaa094197859acf9d8ced9b44/query" // Replace {YOUR_DATABASE_ID} with your actual Notion database ID
-	// url := "https://www.notion.so/ef7479ceaa094197859acf9d8ced9b44" // Error parsing JSON: invalid character '<' looking for beginning of value
-	url := "https://api.notion.com/v1/databases/ef7479ceaa094197859acf9d8ced9b44" //
-
+	url := "https://api.notion.com/v1/databases/" + databaseId
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -64,33 +62,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Parse JSON response as error
-	// var error ErrorResponse
-	// err = json.Unmarshal(body, &error)
-	// if err != nil {
-	// 	fmt.Println("Error 1 parsing JSON:", err)
-	// 	os.Exit(1)
-	// } else {
-	// 	fmt.Println("Error:", error)
-	// }
+	//fmt.Println("\n=== databases response:\n", string(body))
 
-	fmt.Println("Response Body:", string(body))
 
-	// Parse JSON response
-	var pages []NotionPage
-	err = json.Unmarshal(body, &pages)
-	if err != nil {
-		fmt.Println("Error 2 parsing JSON:", err)
-		os.Exit(1)
-	}
+	res, err := Prettyprint(string(body))
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	// Print page information
-	fmt.Println("Notion Pages:")
-	for _, page := range pages {
-		fmt.Printf("ID: %s\n", page.ID)
-		fmt.Printf("Title: %s\n", page.Title)
-		fmt.Printf("Created: %s\n", page.Created)
-		fmt.Printf("Last Edited: %s\n", page.LastEdited)
-		fmt.Println("--------------")
-	}
+	fmt.Println("\n=== databases response:\n", string(res))
+
 }
+
