@@ -24,14 +24,22 @@ NOTION_API_KEY=secret_n3w...iZWq # 56 chars `Internal Integration Token`
 NOTION_API_DATABASE=ef7...b44    # 32 chars `UUID`
 ```
 
-## Build
+## Run dev
+
+`go run go-notion.go` # build an in-memory executable and run it
+
+## Build and run
 
 `go build go-notion.go` # builds the executable `go-notion` in the project directory.
 
-## Run
-
-`go-notion` # Retrieves json data from Notion and prettyprints it to stdout.
+`./go-notion` # retrieves json data from Notion and prettyprints it to stdout.
 
 ## Notes
 
 This program uses no Notion specific libraries.
+
+## Notion API docs
+
+[Retrieve a database](https://developers.notion.com/reference/retrieve-a-database)
+
+[Query a database](https://developers.notion.com/reference/post-database-query)

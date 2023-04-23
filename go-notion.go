@@ -16,6 +16,11 @@ func main() {
 
 	apiToken, databaseId := getAccessTokens()
 
+	retrieveDatabase(databaseId, apiToken)
+
+}
+
+func retrieveDatabase(databaseId string, apiToken string) {
 	url := "https://api.notion.com/v1/databases/" + databaseId
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -35,23 +40,18 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	// Read response body
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error reading response:", err)
 		os.Exit(1)
 	}
 
-	//fmt.Println("\n=== databases response:\n", string(body))
-
-
 	res, err := Prettyprint(string(body))
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	fmt.Println("\n=== databases response:\n", string(res))
-
 }
 
 func Prettyprint(str string) (string, error) {
