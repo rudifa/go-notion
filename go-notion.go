@@ -12,29 +12,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func Prettyprint(str string) (string, error) {
-    var prettyJSON bytes.Buffer
-    if err := json.Indent(&prettyJSON, []byte(str), "", "    "); err != nil {
-        return "", err
-    }
-    return prettyJSON.String(), nil
-}
-
 func main() {
-	// Load environment variables from .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file:", err)
-	}
 
-	// Access environment variables
-	databaseId := os.Getenv("NOTION_DATABASE_ID")
-	apiToken := os.Getenv("NOTION_INTEGRATION_TOKEN")
-
-	if apiToken == "" {
-		fmt.Println("Error: NOTION_API_TOKEN environment variable not set.")
-		os.Exit(1)
-	}
+	apiToken, databaseId := getAccessTokens()
 
 	url := "https://api.notion.com/v1/databases/" + databaseId
 
@@ -74,3 +54,34 @@ func main() {
 
 }
 
+func Prettyprint(str string) (string, error) {
+    var prettyJSON bytes.Buffer
+    if err := json.Indent(&prettyJSON, []byte(str), "", "    "); err != nil {
+        return "", err
+    }
+    return prettyJSON.String(), nil
+}
+
+
+func getAccessTokens() (apiToken, databaseId string){
+    // Load environment variables from .env file
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file:", err)
+    }
+
+    // Access environment variables
+    apiToken = os.Getenv("NOTION_INTEGRATION_TOKEN")
+    databaseId = os.Getenv("NOTION_DATABASE_ID")
+
+    if apiToken == "" {
+        fmt.Println("Error: NOTION_INTEGRATION_TOKEN environment variable not set.")
+        os.Exit(1)
+    }
+
+    if databaseId == "" {
+        fmt.Println("Error: NOTION_DATABASE_ID environment variable not set.")
+        os.Exit(1)
+    }
+    return apiToken, databaseId
+}
