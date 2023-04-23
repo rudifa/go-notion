@@ -1,6 +1,12 @@
 # Notion API access using go language
 
-Demo based on [Getting started with the Notion API JavaScript SDK](https://dev.to/craigaholliday/getting-started-with-the-notion-api-javascript-sdk-c50)
+Demo based on [Getting started with the Notion API JavaScript SDK](https://dev.to/craigaholliday/getting-started-with-the-notion-api-javascript-sdk-c50) -> `retrieveDatabase`
+
+## Notion API docs
+
+[Retrieve a database](https://developers.notion.com/reference/retrieve-a-database) -> `retrieveDatabase2`
+
+[Query a database](https://developers.notion.com/reference/post-database-query)-> `queryDatabase`
 
 ## Notion setup
 

@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -16,10 +17,41 @@ func main() {
 
 	apiToken, databaseId := getAccessTokens()
 
-	retrieveDatabase(databaseId, apiToken)
+	// retrieveDatabase(databaseId, apiToken)
 
 	retrieveDatabase2(databaseId, apiToken)
 
+	queryDatabase(databaseId, apiToken)
+}
+
+func queryDatabase(databaseId, apiToken string) {
+	// based on https://developers.notion.com/reference/post-database-query
+
+	url := "https://api.notion.com/v1/databases/" + databaseId + "/query"
+
+	payload := strings.NewReader("{\"page_size\":100}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("Authorization", "Bearer "+apiToken)
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Notion-Version", "2022-06-28")
+	req.Header.Add("content-type", "application/json")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	// fmt.Println(res)
+	// fmt.Println(string(body))
+
+	ppBody, err := Prettyprint(string(body))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("\n=== queryDatabase response:\n", string(ppBody))
 }
 
 func retrieveDatabase2(databaseId, apiToken string) {
@@ -45,7 +77,7 @@ func retrieveDatabase2(databaseId, apiToken string) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("\n=== databases response:\n", string(ppBody))
+	fmt.Println("\n=== retrieveDatabase2 response:\n", string(ppBody))
 }
 
 func retrieveDatabase(databaseId string, apiToken string) {
