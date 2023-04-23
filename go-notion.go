@@ -28,8 +28,8 @@ func main() {
 	}
 
 	// Access environment variables
-	databaseId := os.Getenv("NOTION_API_DATABASE")
-	apiToken := os.Getenv("NOTION_API_TOKEN")
+	databaseId := os.Getenv("NOTION_DATABASE_ID")
+	apiToken := os.Getenv("NOTION_INTEGRATION_TOKEN")
 
 	if apiToken == "" {
 		fmt.Println("Error: NOTION_API_TOKEN environment variable not set.")
