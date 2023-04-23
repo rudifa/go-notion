@@ -18,9 +18,38 @@ func main() {
 
 	retrieveDatabase(databaseId, apiToken)
 
+	retrieveDatabase2(databaseId, apiToken)
+
+}
+
+func retrieveDatabase2(databaseId, apiToken string) {
+	// based on https://developers.notion.com/reference/retrieve-a-database
+	url := "https://api.notion.com/v1/databases/" + databaseId
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Authorization", "Bearer "+apiToken)
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Notion-Version", "2022-06-28")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	// fmt.Println(res)
+	// fmt.Println(string(body))
+
+	ppBody, err := Prettyprint(string(body))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("\n=== databases response:\n", string(ppBody))
 }
 
 func retrieveDatabase(databaseId string, apiToken string) {
+	// based on https://dev.to/craigaholliday/getting-started-with-the-notion-api-javascript-sdk-c50
 	url := "https://api.notion.com/v1/databases/" + databaseId
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -46,12 +75,12 @@ func retrieveDatabase(databaseId string, apiToken string) {
 		os.Exit(1)
 	}
 
-	res, err := Prettyprint(string(body))
+	ppBody, err := Prettyprint(string(body))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("\n=== databases response:\n", string(res))
+	fmt.Println("\n=== databases response:\n", string(ppBody))
 }
 
 func Prettyprint(str string) (string, error) {
