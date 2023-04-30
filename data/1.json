@@ -1,0 +1,96 @@
+
+=== queryDatabase response:
+ {
+    "object": "list",
+    "results": [
+        {
+            "object": "page",
+            "id": "eb4b7436-e75d-48c6-ab89-2a9f26c61dc0",
+            "created_time": "2023-04-18T15:01:00.000Z",
+            "last_edited_time": "2023-04-18T15:01:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "3c796e05-09b9-4de2-aab5-b779e1757165"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "3c796e05-09b9-4de2-aab5-b779e1757165"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "database_id",
+                "database_id": "668f6d0b-8b23-4572-8d60-9920f06f58f8"
+            },
+            "archived": false,
+            "properties": {
+                "Code fournisseur": {
+                    "id": "%3Ap%3CZ",
+                    "type": "select",
+                    "select": null
+                },
+                "Type of layer": {
+                    "id": "%3D%3Fn_",
+                    "type": "multi_select",
+                    "multi_select": []
+                },
+                "﻿n": {
+                    "id": "Bkjb",
+                    "type": "number",
+                    "number": null
+                },
+                "Timestamp": {
+                    "id": "EsBI",
+                    "type": "select",
+                    "select": null
+                },
+                "Fournisseur": {
+                    "id": "HhN%3D",
+                    "type": "select",
+                    "select": null
+                },
+                "hasAlphaChannel": {
+                    "id": "NINz",
+                    "type": "select",
+                    "select": null
+                },
+                "WMTS format": {
+                    "id": "Sgro",
+                    "type": "select",
+                    "select": null
+                },
+                "Service": {
+                    "id": "Yj%5Eq",
+                    "type": "multi_select",
+                    "multi_select": [
+                        {
+                            "id": "802ad1ba-857d-4f87-adbb-f5402c35d1d2",
+                            "name": "3DTiles",
+                            "color": "orange"
+                        }
+                    ]
+                },
+                "Utilisé dans": {
+                    "id": "aaA%5E",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "Description": {
+                    "id": "nxwn",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "layerName": {
+                    "id": "title",
+                    "type": "title",
+                    "title": []
+                }
+            },
+            "url": "https://www.notion.so/eb4b7436e75d48c6ab892a9f26c61dc0"
+        }
+    ],
+    "next_cursor": "1dc45215-4c22-40e4-9478-7db6de652598",
+    "has_more": true,
+    "type": "page",
+    "page": {}
+}
