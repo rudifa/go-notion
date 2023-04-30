@@ -35,7 +35,7 @@ func GetAccessTokens() (apiToken, databaseId string) {
 	return
 }
 
-func QueryDatabase(databaseId, apiToken string) {
+func QueryDatabase(databaseId, apiToken string) string {
 	// based on https://developers.notion.com/reference/post-database-query
 
 	url := "https://api.notion.com/v1/databases/" + databaseId + "/query"
@@ -47,7 +47,6 @@ func QueryDatabase(databaseId, apiToken string) {
 	req.Header.Add("Authorization", "Bearer "+apiToken)
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Notion-Version", "2022-06-28")
-	req.Header.Add("content-type", "application/json")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -62,11 +61,10 @@ func QueryDatabase(databaseId, apiToken string) {
 		log.Fatal(err)
 	}
 
-	fmt.Fprintln(os.Stderr, "\n=== queryDatabase response:")
-	fmt.Println(string(ppBody))
+	return ppBody
 }
 
-func RetrieveDatabase(databaseId, apiToken string) {
+func RetrieveDatabase(databaseId, apiToken string) string {
 	// based on https://developers.notion.com/reference/retrieve-a-database
 	url := "https://api.notion.com/v1/databases/" + databaseId
 
@@ -88,6 +86,6 @@ func RetrieveDatabase(databaseId, apiToken string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Fprintln(os.Stderr, "=== retrieveDatabase2 response:")
-	fmt.Println(string(ppBody))
+
+	return ppBody
 }
