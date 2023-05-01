@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"os"
 	"regexp"
 )
 
@@ -25,7 +26,7 @@ import (
 //	    "type": "page",
 //	    "page": {}
 //	}`
-func GetNextCursor(jsonStr string) string {
+func GetNextCursor_0(jsonStr string) string {
 
 	type Result struct {
 		Object string `json:"object"`
@@ -46,7 +47,7 @@ func GetNextCursor(jsonStr string) string {
 	var data Data
 	err := json.Unmarshal([]byte(jsonStr), &data)
 	if err != nil {
-		fmt.Println("*** getNextCursor error:", err)
+		fmt.Fprintln(os.Stderr, "*** getNextCursor error:", err)
 		return ""
 	}
 	// fmt.Printf("%+v\n", data)
@@ -54,10 +55,10 @@ func GetNextCursor(jsonStr string) string {
 	return data.NextCursor
 }
 
-// GetNextCursor2 returns the next_cursor uuid value
-// from a json string similat to:
+// GetNextCursor returns the next_cursor uuid value
+// from a json fragment similat to:
 // `"next_cursor": "1dc45215-4c22-40e4-9478-7db6de652598"`
-func GetNextCursor2(jsonInput string) string {
+func GetNextCursor(jsonInput string) string {
 
 	// define regular expression
 	re := regexp.MustCompile(`"next_cursor": "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"`)
@@ -68,16 +69,15 @@ func GetNextCursor2(jsonInput string) string {
 	// extract UUID string
 	if len(matches) > 1 {
 		uuid := matches[1]
-		// fmt.Println(uuid)
 		return uuid
 	} else {
-		fmt.Println("UUID not found")
+		// fmt.Fprintln(os.Stderr, "*** GetNextCursor2: UUID not found")
 		return ""
 	}
 }
 
 const leadingPattern = `{[\s]*"object":[\s]*"list",[\s]*"results":[\s]*\[`
-const trailingPattern = `\],[\s]*"next_cursor":[\s]*"[^"]+",[\s]*"has_more":[\s]*true,[\s]*"type":[\s]*"page",[\s]*"page":[\s]*\{\}[\s]*\}`
+const trailingPattern = `[\s]*\],[\s]*"next_cursor":[\s]*"[^"]+",[\s]*"has_more":[\s]*true,[\s]*"type":[\s]*"page",[\s]*"page":[\s]*\{\}[\s]*\}`
 
 // RemoveLeding removes the leading part of a json string
 // similat to that shown with GetNextCursor
@@ -89,7 +89,7 @@ func RemoveLeading(input string) string {
 
 	var jsonString = input
 	jsonString = re.ReplaceAllString(jsonString, "")
-	fmt.Println("=== RemoveLeading:", jsonString)
+	// fmt.Fprintln(os.Stderr, "=== RemoveLeading:", jsonString)
 	return jsonString
 }
 
@@ -103,7 +103,7 @@ func RemoveTrailing(input string) string {
 
 	var jsonString = input
 	jsonString = re.ReplaceAllString(jsonString, "")
-	fmt.Println("=== RemoveTrailing:", jsonString)
+	// fmt.Fprintln(os.Stderr, "=== RemoveTrailing:", jsonString)
 	return jsonString
 }
 
@@ -119,7 +119,7 @@ func ReplaceTrailingAndLeading(input string) string {
 
 	var jsonString = input
 	jsonString = re.ReplaceAllString(jsonString, ",")
-	fmt.Println("=== RemoveTrailingAndLeading:", jsonString)
+	// fmt.Fprintln(os.Stderr, "=== RemoveTrailingAndLeading:", jsonString)
 	return jsonString
 }
 
