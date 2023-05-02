@@ -38,12 +38,36 @@ adding the new tokens and commenting out or removing the old tokens.
 
 `./go-notion` # run the executable
 
+## Test
+
+`go test ./...` # run unit tests
+
+## Usage
+
+```
+Usage:
+  go-notion [command]
+
+Available Commands:
+  help        Help about any command
+  query       Query the database
+  retrieve    Retrieve data from the database
+
+Flags:
+  -h, --help   help for go-notion
+
+Use "go-notion [command] --help" for more information about a command.
+```
+
 ## Notes
 
-This version of `go-notion` runs the `QueryDatabase` with the tokens specified in the `.env` file
+This version supports command prefix matching (it suffices to enter the leading letters of a command).
+
+This version of `go-notion` runs the functions `QueryDatabase`and `RetrieveDatabase`
+with tokens specified in the `.env` file (required)
 and prints to stdout the received json string.
 
-It retrieved successfully a Notion table containing 796 entries (117614 lines, 4.2MB).
+`query` retrieves successfully a Notion table containing 796 entries (117614 lines, 4.2MB).
 
 This program uses no Notion specific libraries.
 

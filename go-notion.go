@@ -31,6 +31,7 @@ var retrieveCmd = &cobra.Command{
 }
 
 func main() {
+	cobra.EnablePrefixMatching = true
 	rootCmd := &cobra.Command{Use: "go-notion"}
 	rootCmd.AddCommand(queryCmd, retrieveCmd)
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
