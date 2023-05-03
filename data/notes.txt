@@ -1,0 +1,8 @@
+Sample outputs from Uzufly Notion database table "all swisstopo Map Services"
+provides here for experimenting with data extraction from json files
+
+query-1.json        # output of `go-notion query' hacked to get the first page
+query-100.json      # output of `go-notion query' hacked to get the first 100 pages
+query-20.json       # output of `go-notion query' hacked to get the first 20 pages
+query-all.json      # output of `go-notion query' all pages (795 when recorded)
+retrieve-all.json   # output of `go-notion retrieve' 
