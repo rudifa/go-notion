@@ -6,3 +6,17 @@ query-100.json      # output of `go-notion query' hacked to get the first 100 pa
 query-20.json       # output of `go-notion query' hacked to get the first 20 pages
 query-all.json      # output of `go-notion query' all pages (795 when recorded)
 retrieve-all.json   # output of `go-notion retrieve' 
+
+
+merge-all-2-field-object.json   # merged with jq
+merge-all-array-of-2-objects.   # merged with jq
+merge-all-merged-object.json    # merged with jq
+merge-all.jq.sh                 # merging with jq
+
+query-all.jq.sh     # first tests of extracting with jq
+retrieve-all.jq.sh  # first tests of extracting with jq
+
+
+extract.jq.json     # extracted with jq
+extract.jq.sh       # advanced tests of extracting with jq
+
