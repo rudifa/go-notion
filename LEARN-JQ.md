@@ -68,5 +68,4 @@ echo "$VAR" # squashed into a single line
 
 cat $file | jq "$VAR" # use it with jq
 
-
 ```
